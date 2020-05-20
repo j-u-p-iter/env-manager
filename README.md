@@ -45,3 +45,28 @@ const config = {
 }
 ```
 
+You should include env.js into .gitignore file, cause you should hide your credentials.
+
+Before adding and commiting changes you should run
+
+```bash
+@j.u.p.iter/env-manager encrypt
+```
+
+You'll be able to find newly created file into the root directory: env.enc.js (enc part stands for `encrypted`). This file should be added and commited.
+
+In the entry point file of your project you should write:
+
+```typescript
+import { envManager } from '@j.u.p.iter/env-manager';
+
+envManager()
+```
+
+What it does:
+
+- decrypts file env.enc.js
+- read config according to running environment
+- add config to process.env
+
+You should point out NODE_ENV in script, that you use to run your project. This way manager understands, what config it should extract from env.enc.js and merge into process.env.
