@@ -1,0 +1,12 @@
+{
+  "extends": ["@j.u.p.iter/jupiter-scripts/dist/lib/config/tslint.json"],
+  "linterOptions": {
+    "exclude": [
+      "node_modules",
+      "*.json",
+      "**/*.json",
+      "../coverage/**/*.js",
+      "env.enc.js"
+    ]
+  }
+}

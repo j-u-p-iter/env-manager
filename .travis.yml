@@ -1,0 +1,24 @@
+language: node_js
+
+notifications:
+  email: false
+
+branches:
+  only:
+    - master
+
+node_js:
+  - '12'
+
+jobs:
+  include:
+    - stage: validate
+      script: jupiter-scripts validate
+    - stage: deploy
+      script: yarn run build
+      after_success: jupiter-scripts deploy
+
+stages:
+  validate
+  deploy
+

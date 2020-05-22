@@ -1,0 +1,30 @@
+{
+  "name": "@j.u.p.iter/env-manager",
+  "version": "0.0.0-semantically-released",
+  "description": "The tool to manage environment variables with ease",
+  "keywords": [
+    "environment variables",
+    "managing",
+    "nodejs"
+  ],
+  "main": "dist/lib/index.js",
+  "typings": "dist/types",
+  "repository": "git@github.com:j-u-p-iter/env-manager.git",
+  "author": "Leontyev Kirill (j.u.p.iter) <pn79122821224@gmail.com> (http://j-u-p-iter.ru/)",
+  "license": "MIT",
+  "scripts": {
+    "commit": "jupiter-scripts precommit --allowJs",
+    "build": "jupiter-scripts build --allowJs",
+    "start": "yarn run build --watch",
+    "lint": "jupiter-scripts lint --format codeFrame",
+    "lint:fix": "yarn run lint --fix",
+    "test": "jupiter-scripts test"
+  },
+  "devDependencies": {
+    "@j.u.p.iter/jupiter-scripts": "^1.16.3"
+  },
+  "dependencies": {
+    "@j.u.p.iter/encryptor": "^1.0.1",
+    "pkg-dir": "^4.2.0"
+  }
+}
