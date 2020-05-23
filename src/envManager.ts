@@ -41,14 +41,15 @@ export const createEnvManager: CreateEnvManager = password => {
   const readConfig = pathToFile => {
     const pathToDecodedConfig = decodeConfig(pathToFile);
 
-    const config = require(pathToDecodedConfig);
+    const config: {
+      [key: string]: string | number;
+    } = require(pathToDecodedConfig);
 
     fs.unlinkSync(pathToDecodedConfig);
 
-    process.env = {
-      ...process.env,
-      ...config[process.env.NODE_ENV]
-    };
+    Object.entries(config[process.env.NODE_ENV]).forEach(([key, value]) => {
+      process.env[key] = value;
+    });
   };
 
   return {
