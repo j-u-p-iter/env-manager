@@ -15,13 +15,44 @@ describe("envManager", () => {
 
       const pathToEncodedConfig = path.resolve(
         __dirname,
-        "./forCreateConfigTest",
-        "./env.enc.js"
+        "forCreateConfigTest",
+        "env.enc.js"
       );
 
       expect(() => fs.accessSync(pathToEncodedConfig)).not.toThrow();
 
       fs.unlinkSync(pathToEncodedConfig);
+    });
+  });
+
+  describe("decodeConfig(%pathToFile)", () => {
+    it("works properly", () => {
+      envManager.decodeConfig(path.resolve(__dirname, "./forDecodeConfigTest"));
+
+      const pathToDecodedConfig = path.resolve(
+        __dirname,
+        "forDecodeConfigTest",
+        "env.js"
+      );
+
+      const config = require(pathToDecodedConfig);
+
+      expect(config).toEqual({
+        development: {
+          ACCESS_TOKEN: 'tokenForDevelopment',
+        },
+        test: {
+          ACCESS_TOKEN: 'tokenForTesting',
+        },
+        ci: {
+          ACCESS_TOKEN: 'tokenForCI',
+        },
+        production: {
+          ACCESS_TOKEN: 'tokenForProduction',
+        }
+      });
+
+      fs.unlinkSync(pathToDecodedConfig);
     });
   });
 

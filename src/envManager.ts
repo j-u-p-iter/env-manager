@@ -13,7 +13,7 @@ export const createEnvManager: CreateEnvManager = password => {
   const createConfig = pathToFile => {
     const encryptor = createEncryptor(password);
 
-    const pathToConfig = path.resolve(__dirname, pathToFile, "env.js");
+    const pathToConfig = path.resolve(pathToFile, "env.js");
 
     const fileData = fs.readFileSync(pathToConfig);
 
@@ -22,7 +22,7 @@ export const createEnvManager: CreateEnvManager = password => {
     fs.writeFileSync(path.resolve(pathToFile, "env.enc.js"), encrypted);
   };
 
-  const readConfig = pathToFile => {
+  const decodeConfig = pathToFile => {
     const encryptor = createEncryptor(password);
 
     const pathToEncodedConfig = path.resolve(pathToFile, "env.enc.js");
@@ -34,6 +34,12 @@ export const createEnvManager: CreateEnvManager = password => {
     const pathToDecodedConfig = path.resolve(pathToFile, "env.js");
 
     fs.writeFileSync(pathToDecodedConfig, decrypted);
+
+    return pathToDecodedConfig;
+  };
+
+  const readConfig = pathToFile => {
+    const pathToDecodedConfig = decodeConfig(pathToFile);
 
     const config = require(pathToDecodedConfig);
 
@@ -47,6 +53,7 @@ export const createEnvManager: CreateEnvManager = password => {
 
   return {
     readConfig,
+    decodeConfig,
     createConfig
   };
 };
