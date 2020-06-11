@@ -6,6 +6,7 @@
       "*.json",
       "**/*.json",
       "../coverage/**/*.js",
+      "env.js",
       "env.enc.js"
     ]
   }

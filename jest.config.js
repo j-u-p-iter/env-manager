@@ -5,6 +5,6 @@ module.exports = {
   collectCoverageFrom: [
     ...originalConfig.collectCoverageFrom,
     "!**/env.js",
-    "!**/env.enc.js"
+    "!**/env.enc.js",
   ]
 };

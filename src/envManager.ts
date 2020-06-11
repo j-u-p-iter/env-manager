@@ -5,33 +5,49 @@ import path from "path";
 type CreateEnvManager = (
   password: string
 ) => {
-  createConfig: (pathToFile: string) => void;
-  readConfig: (pathToFile: string) => void;
+  createConfig: (params: {
+    pathToFile: string;
+    originalFileName?: string;
+    encryptedFileName?: string;
+  }) => void;
+  readConfig: (params: {
+    pathToFile: string;
+    originalFileName?: string;
+    decodedFileName?: string;
+  }) => void;
 };
 
 export const createEnvManager: CreateEnvManager = password => {
-  const createConfig = pathToFile => {
+  const createConfig = ({
+    pathToFile,
+    originalFileName = "env.js",
+    encryptedFileName = "env.enc.js"
+  }) => {
     const encryptor = createEncryptor(password);
 
-    const pathToConfig = path.resolve(pathToFile, "env.js");
+    const pathToConfig = path.resolve(pathToFile, originalFileName);
 
     const fileData = fs.readFileSync(pathToConfig);
 
     const encrypted = encryptor.encrypt(fileData);
 
-    fs.writeFileSync(path.resolve(pathToFile, "env.enc.js"), encrypted);
+    fs.writeFileSync(path.resolve(pathToFile, encryptedFileName), encrypted);
   };
 
-  const decodeConfig = pathToFile => {
+  const decodeConfig = ({
+    pathToFile,
+    originalFileName = "env.enc.js",
+    decodedFileName = "env.js"
+  }) => {
     const encryptor = createEncryptor(password);
 
-    const pathToEncodedConfig = path.resolve(pathToFile, "env.enc.js");
+    const pathToEncodedConfig = path.resolve(pathToFile, originalFileName);
 
     const fileData = fs.readFileSync(pathToEncodedConfig);
 
     const decrypted = encryptor.decrypt(fileData);
 
-    const pathToDecodedConfig = path.resolve(pathToFile, "env.js");
+    const pathToDecodedConfig = path.resolve(pathToFile, decodedFileName);
 
     fs.writeFileSync(pathToDecodedConfig, decrypted);
 
@@ -39,7 +55,7 @@ export const createEnvManager: CreateEnvManager = password => {
   };
 
   const readConfig = pathToFile => {
-    const pathToDecodedConfig = decodeConfig(pathToFile);
+    const pathToDecodedConfig = decodeConfig({ pathToFile });
 
     const config: {
       [key: string]: string | number;
