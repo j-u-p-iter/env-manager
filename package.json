@@ -14,7 +14,7 @@
   "license": "MIT",
   "scripts": {
     "commit": "jupiter-scripts precommit --allowJs",
-    "build": "jupiter-scripts build --allowJs",
+    "build": "jupiter-scripts build",
     "start": "yarn run build --watch",
     "lint": "jupiter-scripts lint --format codeFrame",
     "lint:fix": "yarn run lint --fix",
