@@ -15,6 +15,11 @@ type CreateEnvManager = (
     originalFileName?: string;
     decodedFileName?: string;
   }) => void;
+  decodeConfig: (params: {
+    pathToFile: string;
+    originalFileName?: string;
+    decodedFileName?: string;
+  }) => void;
 };
 
 export const createEnvManager: CreateEnvManager = password => {
