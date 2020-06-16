@@ -60,7 +60,10 @@ export const createEnvManager: CreateEnvManager = password => {
   };
 
   const readConfig = pathToFile => {
-    const pathToDecodedConfig = decodeConfig({ pathToFile });
+    const pathToDecodedConfig = decodeConfig({
+      pathToFile,
+      decodedFileName: "__env.tmp.js"
+    });
 
     const config: {
       [key: string]: string | number;
